@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"math/rand"
 	"os"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -11,8 +13,9 @@ import (
 )
 
 func main() {
-	os.Setenv("AWS_ACCESS_KEY_ID", "INSERT ACCESS KEY ID")
-	os.Setenv("AWS_SECRET_ACCESS_KEY", "INSERT ACCESS KEY")
+	rand.Seed(time.Now().UnixNano())
+	os.Setenv("AWS_ACCESS_KEY_ID", "AKIAIWXVSIDZT7YVCRAA")
+	os.Setenv("AWS_SECRET_ACCESS_KEY", "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")
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1"),
 	}))
@@ -25,7 +28,7 @@ func main() {
 		Payload string
 	}{
 		"Blah",
-		"Blah Blah Blah",
+		RandStringRunes(10),
 	})
 	result, err := client.SendMessage(&sqs.SendMessageInput{
 		MessageAttributes: map[string]*sqs.MessageAttributeValue{
@@ -45,4 +48,14 @@ func main() {
 	}
 
 	log.Println("YAAAA", *result.MessageId)
+}
+
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func RandStringRunes(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	return string(b)
 }
