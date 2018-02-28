@@ -14,8 +14,8 @@ import (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	os.Setenv("AWS_ACCESS_KEY_ID", "AKIAIWXVSIDZT7YVCRAA")
-	os.Setenv("AWS_SECRET_ACCESS_KEY", "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")
+	os.Setenv("AWS_ACCESS_KEY_ID", "INSERT ACCESS KEY ID")
+	os.Setenv("AWS_SECRET_ACCESS_KEY", "INSERT ACCESS KEY")
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1"),
 	}))
